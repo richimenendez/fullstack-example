@@ -1,0 +1,31 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@mikro-orm/core");
+const Post_1 = require("./entities/Post");
+const mikro_orn_config_1 = __importDefault(require("./mikro-orn.config"));
+const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    const orm = yield core_1.MikroORM.init(mikro_orn_config_1.default);
+    console.log('----------- sql 1 ----------------');
+    const post = orm.em.create(Post_1.Post, { title: 'my fist post' });
+    yield orm.em.persistAndFlush(post);
+    console.log('----------- sql 2 ----------------');
+    yield orm.em.nativeInsert(Post_1.Post, { title: 'my first post with native Insert' });
+});
+main().catch((err) => {
+    console.log(err);
+});
+console.log("Hello World :)");
+console.log("Hello World :)");
+//# sourceMappingURL=index.js.map
